@@ -1,0 +1,111 @@
+- Class: meta
+  Course: Learn Regular Expression with re2r
+  Lesson: Test Your Self
+  Author: Qin Wenfeng
+  Type: Standard
+  Organization: re2r
+  Version: 2.4.2
+
+- Class: text
+  Output: Welcome back!
+
+- Class: text
+  Output: In this lesson, we will learn to write some pattern.
+
+- Class: text
+  Output: Match `.`
+
+- Class: text
+  Output: To match `c("11.2", "print.list", "res = ls.str()")`
+
+- Class: text
+  Output: Think for a second!
+
+- Class: text
+  Output: Do you know?
+
+- Class: cmd_question
+  Output: Type `all(re2_detect(str, "[.]"))`
+  CorrectAnswer: all(re2_detect(str, "[.]"))
+  AnswerTests: omnitest(correctExpr = 'all(re2_detect(str, "[.]"))')
+
+- Class: text
+  Output: `\\.` is also the same.
+
+- Class: text
+  Output: 'Match `()*+,;!#$%&{|}~.<=>?@-./:[]^_`'
+
+- Class: text
+  Output: Think for a second!
+
+- Class: text
+  Output: Do you know?
+
+- Class: cmd_question
+  Output: Type `re2_detect(str, quote_meta("()*+,;!#$%&{|}~.<=>?@-./:[]^_"))`
+  CorrectAnswer: re2_detect(str, quote_meta("()*+,;!#$%&{|}~.<=>?@-./:[]^_"))
+  AnswerTests: omnitest(correctExpr = 're2_detect(str, quote_meta("()*+,;!#$%&{|}~.<=>?@-./:[]^_"))')
+
+- Class: text
+  Output: Match characters
+
+- Class: text
+  Output: Match c("did", "vid", "rid")
+
+- Class: text
+  Output: Skip c("lid", "kid")
+
+- Class: text
+  Output: Think for a second!
+
+- Class: text
+  Output: Do you know?
+
+- Class: cmd_question
+  Output: Type `re2_detect(c("did", "vid", "rid"), "[dvr]id")`
+  CorrectAnswer: re2_detect(c("did", "vid", "rid"), "[dvr]id")
+  AnswerTests: omnitest(correctExpr = 're2_detect(c("did", "vid", "rid"), "[dvr]id")')
+
+- Class: cmd_question
+  Output: Type `!re2_detect(c("lid", "kid"), "[dvr]id")`
+  CorrectAnswer: !re2_detect(c("lid", "kid"), "[dvr]id")
+  AnswerTests: omnitest(correctExpr = '!re2_detect(c("lid", "kid"), "[dvr]id")')
+
+- Class: text
+  Output: Extract Data from URL
+
+- Class: text
+  Output: Extract scheme, host, port and resource path from a URL.
+
+- Class: text
+  Output: Input - c("https://www.google.com", "ftp://test.com:21", "http://test.com/path/to/file")
+
+- Class: text
+  Output: Output - c(scheme = "https", host = "www.google.com", port = NA, resource = NA)
+
+- Class: text
+  Output: Output - c("ftp", "test.com", "21", NA)
+
+- Class: text
+  Output: Output - c("http", "test.com", NA, "path/to/file")
+
+- Class: text
+  Output: Think for a second!
+
+- Class: text
+  Output: Do you know?
+
+- Class: cmd_question
+  Output: Type `re2_match(c("https://www.google.com", "ftp://test.com:21", "http://test.com/path/to/file"), "(\\w+)://([\\w-.]+)(?::(\\d+))?(?:/(.*))?")`
+  CorrectAnswer: re2_match(c("https://www.google.com", "ftp://test.com:21", "http://test.com/path/to/file"), "(\\w+)://([\\w-.]+)(?::(\\d+))?(?:/(.*))?")
+  AnswerTests: omnitest(correctExpr = 're2_match(c("https://www.google.com", "ftp://test.com:21", "http://test.com/path/to/file"), "(\\w+)://([\\w-.]+)(?::(\\d+))?(?:/(.*))?")')
+
+- Class: text
+  Output: That is all!
+
+- Class: text
+  Output: If you forget some syntaxes, you can always check out the syntax page http://qinwenfeng.com/re2r_doc/re2r-syntax.html
+
+- Class: text
+  Output: Or https://github.com/qinwf/re2r_doc
+

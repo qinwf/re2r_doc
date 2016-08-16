@@ -1,0 +1,243 @@
+- Class: meta
+  Course: Learn Regular Expression with re2r
+  Lesson: Learn Method
+  Author: Qin Wenfeng
+  Type: Standard
+  Organization: re2r
+  Version: 2.4.2
+
+- Class: text
+  Output: Welcome back!
+
+- Class: text
+  Output: In this lesson, we will learn 10 methods to use with regex.
+
+- Class: text
+  Output: 1. Detect
+
+- Class: text
+  Output: Test a pattern in strings, and return boolean.
+
+- Class: cmd_question
+  Output: Type `re2_detect("123-234-2222", "\\d\\d\\d-\\d\\d\\d-\\d\\d\\d\\d")`
+  CorrectAnswer: re2_detect("123-234-2222", "\\d\\d\\d-\\d\\d\\d-\\d\\d\\d\\d")
+  AnswerTests: omnitest(correctExpr = 're2_detect("123-234-2222", "\\d\\d\\d-\\d\\d\\d-\\d\\d\\d\\d")')
+
+- Class: text
+  Output: This method vectorises over strings and patterns.
+
+- Class: cmd_question
+  Output: Type `re2_detect(c("a","b","c"), c("a","b","c"))`
+  CorrectAnswer: re2_detect(c("a","b","c"), c("a","b","c"))
+  AnswerTests: omnitest(correctExpr = 're2_detect(c("a","b","c"), c("a","b","c"))')
+
+- Class: cmd_question
+  Output: Type `re2_detect(c("a"), c("a","b","c"))`
+  CorrectAnswer: re2_detect(c("a"), c("a","b","c"))
+  AnswerTests: omnitest(correctExpr = 're2_detect(c("a"), c("a","b","c"))')
+
+- Class: text
+  Output: This is the end of method 1.
+
+- Class: text
+  Output: 2. Match
+
+- Class: text
+  Output: '`re2_match` finds matched groups from strings. `re2_match_all` finds all of the matched groups instead of the first one.'
+
+- Class: cmd_question
+  Output: Type `re2_match(c("123 456", "abc"),"\\b[0-9]+\\b")`
+  CorrectAnswer: re2_match(c("123 456", "abc"),"\\b[0-9]+\\b")
+  AnswerTests: omnitest(correctExpr = 're2_match(c("123 456", "abc"),"\\b[0-9]+\\b")')
+
+- Class: cmd_question
+  Output: Type `re2_match_all(c("123 456","abc"),"\\b[0-9]+\\b")`
+  CorrectAnswer: re2_match_all(c("123 456","abc"),"\\b[0-9]+\\b")
+  AnswerTests: omnitest(correctExpr = 're2_match_all(c("123 456","abc"),"\\b[0-9]+\\b")')
+
+- Class: text
+  Output: The names of the groups will be column names.
+
+- Class: cmd_question
+  Output: Type `re2_match("test@mail.com", "(?P<username>[a-zA-Z0-9._%-]+)@([a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4})")`
+  CorrectAnswer: re2_match("test@mail.com", "(?P<username>[a-zA-Z0-9._%-]+)@([a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4})")
+  AnswerTests: omnitest(correctExpr = 're2_match("test@mail.com", "(?P<username>[a-zA-Z0-9._%-]+)@([a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4})")')
+
+- Class: text
+  Output: 3. Extract
+
+- Class: text
+  Output: '`re2_extract` finds matched strings from strings. `re2_extract_all` finds all of the matched strings instead of the first one. The matched groups are not returned.'
+
+- Class: cmd_question
+  Output: Type `re2_extract(c("123 456", "abc"),"\\b[0-9]+\\b")`
+  CorrectAnswer: re2_extract(c("123 456", "abc"),"\\b[0-9]+\\b")
+  AnswerTests: omnitest(correctExpr = 're2_extract(c("123 456", "abc"),"\\b[0-9]+\\b")')
+
+- Class: cmd_question
+  Output: Type `re2_extract_all(c("123 456", "abc"),"\\b[0-9]+\\b")`
+  CorrectAnswer: re2_extract_all(c("123 456", "abc"),"\\b[0-9]+\\b")
+  AnswerTests: omnitest(correctExpr = 're2_extract_all(c("123 456", "abc"),"\\b[0-9]+\\b")')
+
+
+- Class: text
+  Output: 4. Count
+
+- Class: text
+  Output: '`re2_count` counts the number of matches in a string.'
+
+- Class: cmd_question
+  Output: Type `re2_count(c("sunny","beach","happy","really"), "y")`
+  CorrectAnswer: re2_count(c("sunny","beach","happy","really"), "y")
+  AnswerTests: omnitest(correctExpr = 're2_count(c("sunny","beach","happy","really"), "y")')
+
+- Class: text
+  Output: This method vectorises over strings and patterns.
+
+- Class: text
+  Output: re2_count("This", letters)
+
+- Class: text
+  Output: 5. Replace
+
+- Class: text
+  Output: `re2_replace` replaces matched patterns in a string. `re2_replace_all` replaces all of the matched groups instead of the first one.
+
+- Class: cmd_question
+  Output: Type `re2_replace_all(c("  abc  "," this is "), "^[\\s]+|[\\s]+$", "")`
+  CorrectAnswer: re2_replace_all(c("  abc  "," this is "), "^[\\s]+|[\\s]+$", "")
+  AnswerTests: omnitest(correctExpr = 're2_replace(c("  abc  "," this is "), "^[\\s]+|[\\s]+$", "")')
+
+- Class: text
+  Output: Within replacement, backslash-escaped digits (`\1` to `\9`) can be used to insert text matching corresponding parenthesized group from the pattern. `\0` in replacement refers to the entire matching text.
+
+- Class: cmd_question
+  Output: Type `re2_replace("test@mail.com", "^([a-zA-Z0-9._%-]+)@([a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4})$", "My email username is '\\1', and the provider is '\\2'.")`
+  CorrectAnswer: re2_replace("test@mail.com", "^([a-zA-Z0-9._%-]+)@([a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4})$", "My email username is '\\1', and the provider is '\\2'.")
+  AnswerTests: omnitest(correctExpr = 're2_replace("test@mail.com", "^([a-zA-Z0-9._%-]+)@([a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4})$", "My email username is \'\\1\', and the provider is \'\\2\'.")')
+
+- Class: text
+  Output: These two methods vectorise over strings, patterns, and replacements.
+
+- Class: text
+  Output: 6. Split
+
+- Class: text
+  Output: `re2_split` splits up a string into pieces and returns a list of character vectors.
+
+- Class: cmd_question
+  Output: Type `re2_split(c("to be or not to be", "apple pie"), " ")`
+  CorrectAnswer: re2_split(c("to be or not to be", "apple pie"), " ")
+  AnswerTests: omnitest(correctExpr = 're2_split(c("to be or not to be", "apple pie"), " ")')
+
+- Class: text
+  Output: Optional parameter `n` is te number of pieces to return. Default value is `Inf` for `re2_split`, and it uses all possible split positions.
+
+- Class: cmd_question
+  Output: Type `re2_split(c("to be or not to be", "apple pie"), " ", n = 3)`
+  CorrectAnswer: re2_split(c("to be or not to be", "apple pie"), " ", n = 3)
+  AnswerTests: omnitest(correctExpr = 're2_split(c("to be or not to be", "apple pie"), " ", n = 3)')
+
+- Class: text
+  Output: `re2_split_fixed` splits up a string into pieces, and returns a  a character matrix with `n` columns. `n` is not optional, and if `n` is greater than the number of pieces, the result will be padded with empty strings.
+
+- Class: cmd_question
+  Output: Type `re2_split_fixed(c("to be or not to be", "apple pie"), " ", n = 3)`
+  CorrectAnswer: re2_split_fixed(c("to be or not to be", "apple pie"), " ", n = 3)
+  AnswerTests: omnitest(correctExpr = 're2_split_fixed(c("to be or not to be", "apple pie"), " ", n = 3)')
+
+- Class: text
+  Output: These two methods vectorise over string and pattern.
+
+- Class: text
+  Output: 7. Locate
+
+- Class: text
+  Output: `re2_locate` locates the position of patterns in a string. If the match is of length 0, (e.g. from a special match like $) end will be one character less than the start.
+
+- Class: cmd_question
+  Output: Type `re2_locate(c("apple", "banana", "pear", "pineapple"), "$")`
+  CorrectAnswer: re2_locate(c("apple", "banana", "pear", "pineapple"), "$")
+  AnswerTests: omnitest(correctExpr = 're2_locate(c("apple", "banana", "pear", "pineapple"), "$")')
+
+- Class: cmd_question
+  Output: Type `re2_locate(c("apple", "banana", "pear", "pineapple"), "a")`
+  CorrectAnswer: re2_locate(c("apple", "banana", "pear", "pineapple"), "a")
+  AnswerTests: omnitest(correctExpr = 're2_locate(c("apple", "banana", "pear", "pineapple"), "a")')
+
+- Class: text
+  Output: `re2_locate_all` locates all of the positions and returns a list.
+
+- Class: cmd_question
+  Output: Type `re2_locate_all(c("apple", "banana", "pear", "pineapple"), c("a", "b", "p", "e"))`
+  CorrectAnswer: re2_locate_all(c("apple", "banana", "pear", "pineapple"), c("a", "b", "p", "e"))
+  AnswerTests: omnitest(correctExpr = 're2_locate_all(c("apple", "banana", "pear", "pineapple"), c("a", "b", "p", "e"))')
+
+- Class: text
+  Output: These two methods vectorise over string and pattern.
+
+- Class: text
+  Output: 8. Quote
+
+- Class: text
+  Output: `quote_meta` escapes all potentially meaningful regexp characters.
+
+- Class: cmd_question
+  Output: Type `re2_detect("[|$^*", quote_meta("[|$^*"))`
+  CorrectAnswer: re2_detect("[|$^*", quote_meta("[|$^*"))
+  AnswerTests: omnitest(correctExpr = 're2_detect("[|$^*", quote_meta("[|$^*"))')
+
+- Class: text
+  Output: There are two more way to achieve the same goal.
+
+- Class: text
+  Output: `\Q…\E` Escape Sequences
+
+- Class: cmd_question
+  Output: Type `re2_detect("[|$^*", "\\Q[|$^*\\E")`
+  CorrectAnswer: re2_detect("[|$^*", "\\Q[|$^*\\E")
+  AnswerTests: omnitest(correctExpr = 're2_detect("[|$^*", "\\Q[|$^*\\E")')
+
+- Class: text
+  Output: Literal options
+
+- Class: cmd_question
+  Output: Type `re2_detect("[|$^*", re2("[|$^*", literal = T))`
+  CorrectAnswer: re2_detect("[|$^*", re2("[|$^*", literal = T))
+  AnswerTests: omnitest(correctExpr = 're2_detect("[|$^*", re2("[|$^*", literal = T))')
+
+- Class: text
+  Output: 9. Show
+
+- Class: text
+  Output: `show_regex` plots regex pattern in a htmlwidget.
+
+- Class: text
+  Output: For a long regex, it will be really hard to read and understand. `show_regex` will help you to visualize it. `show_regex` now supports Javascript style regex syntax, and it covers most of RE2 syntax.
+
+- Class: cmd_question
+  Output: Type `show_regex("^(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\\.(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\\.(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\\.(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])$")`
+  CorrectAnswer: show_regex("^(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\\.(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\\.(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\\.(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])$")
+  AnswerTests: omnitest(correctExpr = 'show_regex("^(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\\.(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\\.(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\\.(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])$")')
+
+- Class: text
+  Output: 10. Compile
+
+- Class: text
+  Output: `re2` creates a pre-compiled regular expression.
+
+- Class: cmd_question
+  Output: Type `regexp = re2("\\s+|\\s+")`
+  CorrectAnswer: regexp = re2("\\s+|\\s+")
+  AnswerTests: omnitest(correctExpr = 'regexp = re2("\\s+|\\s+")')
+
+- Class: text
+  Output: The pre-compiled regular expression can be used for many times without re-compiling.
+
+- Class: cmd_question
+  Output: Type `print(regexp)`
+  CorrectAnswer: print(regexp)
+  AnswerTests: omnitest(correctExpr = 'print(regexp)')
+
+- Class: text
+  Output: `print` function prints the properties of the pre-compiled regular expression.

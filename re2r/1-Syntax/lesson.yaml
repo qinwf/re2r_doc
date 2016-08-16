@@ -1,0 +1,690 @@
+- Class: meta
+  Course: Learn Regular Expression with re2r
+  Lesson: Learn Syntax
+  Author: Qin Wenfeng
+  Type: Standard
+  Organization: re2r
+  Version: 2.4.2
+
+- Class: text
+  Output: Welcome to `Learn Regular Expression with re2r`!
+
+- Class: text
+  Output: Regular expression helps you detect a pattern in a string.
+
+- Class: text
+  Output: It also can help you extract or replace substrings in a string.
+
+- Class: text
+  Output: This tutorial introduces the syntax of RE2 regular expression.
+
+- Class: text
+  Output: We will learn some basic syntax first, and then we will learn more about the regex methods.
+
+- Class: text
+  Output: For the syntax parts, we have 6 sections.
+
+- Class: text
+  Output: |
+        1. Normal Letters and Digits, 2. Composition,
+        3. Match Single Character,  4. Repetition,
+        5. Group, 6.Empty Strings.
+
+- Class: text
+  Output: Syntax - 1. Normal Letters and Digits
+
+- Class: text
+  Output: Let's write our first regular expression (regex) to match "hello world".
+
+- Class: text
+  Output: Type this line in the console.
+
+- Class: cmd_question
+  Output: re2_detect(string = "hello world", pattern = "hello world")
+  CorrectAnswer: re2_detect(string = "hello world", pattern = "hello world")
+  AnswerTests: omnitest(correctExpr = 're2_detect(string = "hello world", pattern = "hello world")')
+
+- Class: text
+  Output: re2_detect test a pattern in strings, and return boolean. The pattern "hello world" just matches the string "hello world", so the result is TRUE.
+
+- Class: text
+  Output: For the pattern, it contains just simple English characters, which are normal characters and represent themselves in the pattern. "one" will match "one", "911" will match "911".
+
+
+- Class: text
+  Output: If you want to test whether a string contains "happy", you can use the pattern "happy".
+
+- Class: cmd_question
+  Output: Type `re2_detect(string = c("I am happy", "I am sad"), pattern = "happy")`
+  CorrectAnswer: re2_detect(string = c("I am happy", "I am sad"), pattern = "happy")
+  AnswerTests: omnitest(correctExpr = 're2_detect(string = c("I am happy", "I am sad"), pattern = "happy")')
+
+- Class: text
+  Output: This is the end of the first part. So easy!
+
+- Class: text
+  Output: Syntax - 2. Composition
+
+- Class: text
+  Output: Syntax - 2.1 Simple Composition
+
+- Class: text
+  Output: Combine normal characters and metacharacters, we can create many very complicated regexes.
+
+- Class: text
+  Output: The simplest way to do, is to write them together, and we write this kind of patterns before.
+
+- Class: cmd_question
+  Output: Type `re2_detect("hello ", "hello ")`
+  CorrectAnswer: re2_detect("hello ", "hello ")
+  AnswerTests: omnitest(correctExpr = 're2_detect("hello ", "hello ")')
+
+
+- Class: text
+  Output: Syntax - 2.2 Alternative `|`
+
+- Class: text
+  Output: Metacharacters and metasequences are characters or sequences of characters that have special meanings in regexes. eg, `|` does not represent itself in a pattern.
+
+- Class: text
+  Output: x|y means match x or y, and prefer x.
+
+- Class: cmd_question
+  Output: Type `re2_detect("abc", "abd|c")`
+  CorrectAnswer: re2_detect("abc", "abd|c")
+  AnswerTests: omnitest(correctExpr = 're2_detect("abc", "abd|c")')
+
+- Class: text
+  Output: What about pattern `xa|b|cx` ?
+
+- Class: text
+  Output: For a long regex, it will be really hard to read and understand. `show_regex` will help you to visualize it. `show_regex` now supports Javascript style regex syntax, and it covers most of RE2 syntax.
+
+- Class: text
+  Output: Use `show_regex` to show the result
+
+- Class: cmd_question
+  Output: Type `show_regex("xa|b|cx")`
+  CorrectAnswer: show_regex("xa|b|cx")
+  AnswerTests: omnitest(correctExpr = 'show_regex("xa|b|cx")')
+
+
+- Class: cmd_question
+  Output: Type `re2_detect("b", "xa|b|cx")`
+  CorrectAnswer: re2_detect("b", "xa|b|cx")
+  AnswerTests: omnitest(correctExpr = 're2_detect("b", "xa|b|cx")')
+
+- Class: text
+  Output: We just learn two way to Composite the pattern. Let's move to the third part.
+
+- Class: text
+  Output: Syntax 3. Match Single Character
+
+- Class: text
+  Output: Syntax 3.1 Matches Any Character except a Newline `.`
+
+- Class: text
+  Output: . Matches any character except a newline.
+
+- Class: cmd_question
+  Output: Type `re2_detect(string = c("one","o e"), pattern = "o.e")`
+  CorrectAnswer: re2_detect(string = c("one","o e"), pattern = "o.e")
+  AnswerTests: omnitest(correctExpr = 're2_detect(string = c("one","o e"), pattern = "o.e")')
+
+- Class: text
+  Output: Syntax 3. Match Single Character
+
+- Class: text
+  Output: Syntax 3.2 Character Classes `[...]` & `[^...]`
+
+- Class: text
+  Output: Character classes `[...]` allow you to list the characters that you want to match. A character class always matches one character.
+
+- Class: text
+  Output: Let's write a pattern to deal with "calendar" with misspellings.
+
+- Class: cmd_question
+  Output: Type `re2_detect(c("calendar", "celendar"), "c[ae]l[ae]nd[ae]r")`
+  CorrectAnswer: re2_detect(c("calendar", "celendar"), "c[ae]l[ae]nd[ae]r")
+  AnswerTests: omnitest(correctExpr = 're2_detect(c("calendar", "celendar"), "c[ae]l[ae]nd[ae]r")')
+
+- Class: text
+  Output: Negated character classes `[^...]` allow you to list the characters that you do not want to match, and match the rest characters. It also only matches one character.
+
+- Class: cmd_question
+  Output: Type `re2_detect(c(" ", "b"), "[^a-zA-Z0-9]")`
+  CorrectAnswer: re2_detect(c(" ", "b"), "[^a-zA-Z0-9]")
+  AnswerTests: omnitest(correctExpr = 're2_detect(c(" ", "b"), "[^a-zA-Z0-9]")')
+
+- Class: text
+  Output: The - (dash) indicates a range of characters. For example, `[a-z]` matches any lowercase ASCII letter. To include the dash in the list of characters, either list it first, or escape it.
+
+- Class: text
+  Output: '` ` is not in the range of [a-zA-Z0-9], so it matches [^a-zA-Z0-9]. "b" is in [a-z], so [^a-zA-Z0-9] does not match "b".'
+
+- Class: text
+  Output: Syntax 3. Match Single Character
+
+- Class: text
+  Output: Syntax 3.3 Escape Metacharacters `\`
+
+- Class: text
+  Output: '`\` can help you escape metacharacters, and let them represent themselves. In R code, "\\\\" will represent \\ in a string.'
+
+- Class: cmd_question
+  Output: Type `cat("\\")`
+  CorrectAnswer: cat("\\")
+  AnswerTests: omnitest(correctExpr = 'cat("\\")')
+
+- Class: cmd_question
+  Output: Type `cat("\\.")`
+  CorrectAnswer: cat("\\.")
+  AnswerTests: omnitest(correctExpr = 'cat("\\.")')
+
+- Class: text
+  Output: So you can usually see we use "\\\\" in R code to escape a character.
+
+- Class: cmd_question
+  Output: Type `re2_detect(string = ".", pattern = "\\.")`
+  CorrectAnswer: re2_detect(string = ".", pattern = "\\.")
+  AnswerTests: omnitest(correctExpr = 're2_detect(string = ".", pattern = "\\.")')
+
+- Class: cmd_question
+  Output: Type `re2_detect(string = "\\", pattern = "\\\\")`
+  CorrectAnswer: re2_detect(string = "\\", pattern = "\\\\")
+  AnswerTests: omnitest(correctExpr = 're2_detect(string = "\\", pattern = "\\\\")')
+
+- Class: text
+  Output: There are some more escape sequences "http://qinwenfeng.com/re2r_doc/re2r-syntax.html#escape_sequences".
+
+- Class: text
+  Output: Syntax 3. Match Single Character
+
+- Class: text
+  Output: Syntax 3.4 `\s \S \d \D \w \W`
+
+- Class: text
+  Output: Combine `\` with a normal character, eg. `\s`, will change the meanings of normal character. `\s` represents a whitespace character.
+
+- Class: cmd_question
+  Output: Type `cat("\\s")`
+  CorrectAnswer: cat("\\s")
+  AnswerTests: omnitest(correctExpr = 'cat("\\s")')
+
+- Class: text
+  Output: '`\S` title case with `S` matches not whitespace.'
+
+- Class: cmd_question
+  Output: Type `re2_detect(string = "abc", pattern = "\\S")`
+  CorrectAnswer: re2_detect(string = "abc", pattern = "\\S")
+  AnswerTests: omnitest(correctExpr = 're2_detect(string = "abc", pattern = "\\S")')
+
+- Class: cmd_question
+  Output: Type `re2_detect(string = " ", pattern = "\\S")`
+  CorrectAnswer: re2_detect(string = " ", pattern = "\\S")
+  AnswerTests: omnitest(correctExpr = 're2_detect(string = " ", pattern = "\\S")')
+
+- Class: text
+  Output: '`\w` is word characters, and is the same as `[0-9A-Za-z_]`.'
+
+- Class: cmd_question
+  Output: Type `re2_detect(string = "abc_", pattern = "\\w\\w\\w\\w")`
+  CorrectAnswer: re2_detect(string = "abc_", pattern = "\\w\\w\\w\\w")
+  AnswerTests: omnitest(correctExpr = 're2_detect(string = "abc_", pattern = "\\w\\w\\w\\w")')
+
+- Class: text
+  Output: '`\W` is not word characters, and is the same as `[^0-9A-Za-z_]`.'
+
+- Class: cmd_question
+  Output: Type `re2_detect(" ^%#@", "\\W\\W\\W\\W\\W")`
+  CorrectAnswer: re2_detect(" ^%#@", "\\W\\W\\W\\W\\W")
+  AnswerTests: omnitest(correctExpr = 're2_detect(" ^%#@", "\\W\\W\\W\\W\\W")')
+
+- Class: text
+  Output: '`\d` represents a digit `[0-9]`, `\D` a character that is not a digit `[^0-9]`.'
+
+- Class: cmd_question
+  Output: Type `re2_detect("100.11", "\\d\\d\\d\\.\\d\\d")`
+  CorrectAnswer: re2_detect("100.11", "\\d\\d\\d\\.\\d\\d")
+  AnswerTests: omnitest(correctExpr = 're2_detect("100.11", "\\d\\d\\d\\.\\d\\d")')
+
+- Class: cmd_question
+  Output: Type `re2_detect("100.11", "[0-9][0-9][0-9]\\.[0-9][0-9]")`
+  CorrectAnswer: re2_detect("100.11", "[0-9][0-9][0-9]\\.[0-9][0-9]")
+  AnswerTests: omnitest(correctExpr = 're2_detect("100.11", "[0-9][0-9][0-9]\\.[0-9][0-9]")')
+
+- Class: cmd_question
+  Output: Type `show_regex("[0-9][0-9][0-9]\\.[0-9][0-9]")`
+  CorrectAnswer: show_regex("[0-9][0-9][0-9]\\.[0-9][0-9]")
+  AnswerTests: omnitest(correctExpr = 'show_regex("[0-9][0-9][0-9]\\.[0-9][0-9]")')
+
+- Class: text
+  Output: Syntax 3. Match Single Character
+
+- Class: text
+  Output: Syntax 3.5 ASCII Character Classes
+
+- Class: text
+  Output: There are some more character classes for ASCII character, eg. `[[:alpha:]]` represent `[A-Za-z]`, `[[:lower:]]` represent `[a-z]`. Check out the whole list here [ASCII character classes](http://qinwenfeng.com/re2r_doc/re2r-syntax.html#ascii_character_classes).
+
+- Class: text
+  Output: ASCII character classes matches only one character.
+
+- Class: cmd_question
+  Output: Type `re2_detect("a","[[:lower:]]")`
+  CorrectAnswer: re2_detect("a","[[:lower:]]")
+  AnswerTests: omnitest(correctExpr = 're2_detect("a","[[:lower:]]")')
+
+- Class: text
+  Output: Syntax 3. Match Single Character
+
+- Class: text
+  Output: Syntax 3.6 Unicode Character Class
+
+- Class: text
+  Output: '`\s \S \d \D \w \W` are Perl character classes.'
+
+- Class: text
+  Output: '`[[:xxx:]]` is the style of ASCII character classes, eg. `[[:lower:]]`.'
+
+- Class: text
+  Output: '`\p{xxx}` is the style of Unicode character class.'
+
+- Class: text
+  Output: Unicode character class "http://qinwenfeng.com/re2r_doc/re2r-syntax.html#unicode_character_classes" is the link to the total list of Unicode character classes that are supported by `re2r`.
+
+- Class: cmd_question
+  Output: Type `re2_detect(c("ß","¶"), "\\p{L}")`
+  CorrectAnswer: re2_detect(c("ß","¶"), "\\p{L}")
+  AnswerTests: omnitest(correctExpr = 're2_detect(c("ß","¶"), "\\p{L}")')
+
+- Class: text
+  Output: '`\p{L}` is a Unicode character classes matches Unicode letters.'
+
+- Class: text
+  Output: Syntax 4. Repetition
+
+- Class: text
+  Output: 'Syntax 4.1 `* + ?`'
+
+- Class: text
+  Output: '`*` zero or more, prefer more'
+
+- Class: cmd_question
+  Output: Type `re2_detect(c("ba", "b", "a", "baa"), "ba*")`
+  CorrectAnswer: re2_detect(c("ba", "b", "a", "baa"), "ba*")
+  AnswerTests: omnitest(correctExpr = 're2_detect(c("ba", "b", "a", "baa"), "ba*")')
+
+- Class: cmd_question
+  Output: Type `re2_match(c("ba", "b", "a", "baa"), "ba*")`
+  CorrectAnswer: re2_match(c("ba", "b", "a", "baa"), "ba*")
+  AnswerTests: omnitest(correctExpr = 're2_match(c("ba", "b", "a", "baa"), "ba*")')
+
+- Class: text
+  Output: '`re2_match` returns the matched string. If there is no match, `NA` is returned.'
+
+- Class: text
+  Output: '`+` one or more x, prefer more'
+
+- Class: cmd_question
+  Output: Type `re2_detect(c("ba", "b", "a", "baa"), "ba+")`
+  CorrectAnswer: re2_detect(c("ba", "b", "a", "baa"), "ba+")
+  AnswerTests: omnitest(correctExpr = 're2_detect(c("ba", "b", "a", "baa"), "ba+")')
+
+- Class: cmd_question
+  Output: Type `re2_match(c("ba", "b", "a", "baa"), "ba+")`
+  CorrectAnswer: re2_match(c("ba", "b", "a", "baa"), "ba+")
+  AnswerTests: omnitest(correctExpr = 're2_match(c("ba", "b", "a", "baa"), "ba+")')
+
+- Class: text
+  Output: '`?` zero or one x, prefer one'
+
+- Class: cmd_question
+  Output: Type `re2_detect(c("ba", "b", "a", "baa"), "ba?")`
+  CorrectAnswer: re2_detect(c("ba", "b", "a", "baa"), "ba?")
+  AnswerTests: omnitest(correctExpr = 're2_detect(c("ba", "b", "a", "baa"), "ba?")')
+
+- Class: cmd_question
+  Output: Type `re2_match(c("ba", "b", "a", "baa"), "ba?")`
+  CorrectAnswer: re2_match(c("ba", "b", "a", "baa"), "ba?")
+  AnswerTests: omnitest(correctExpr = 're2_match(c("ba", "b", "a", "baa"), "ba?")')
+
+
+- Class: text
+  Output: Syntax 4. Repetition
+
+- Class: text
+  Output: 'Syntax 4.2 `{n,m} {n,} {n}`'
+
+- Class: text
+  Output: '`{n,m}` n to m times, prefer more'
+
+- Class: cmd_question
+  Output: Type `re2_detect(c("ba", "b", "a", "baa"), "ba{0,2}")`
+  CorrectAnswer: re2_detect(c("ba", "b", "a", "baa"), "ba{0,2}")
+  AnswerTests: omnitest(correctExpr = 're2_detect(c("ba", "b", "a", "baa"), "ba{0,2}")')
+
+- Class: cmd_question
+  Output: Type `re2_match(c("ba", "b", "a", "baa"), "ba{0,2}")`
+  CorrectAnswer: re2_match(c("ba", "b", "a", "baa"), "ba{0,2}")
+  AnswerTests: omnitest(correctExpr = 're2_match(c("ba", "b", "a", "baa"), "ba{0,2}")')
+
+- Class: text
+  Output: '`{n,}` n or more times, prefer more'
+
+- Class: cmd_question
+  Output: Type `re2_detect(c("ba", "b", "a", "baa"), "ba{1,}")`
+  CorrectAnswer: re2_detect(c("ba", "b", "a", "baa"), "ba{1,}")
+  AnswerTests: omnitest(correctExpr = 're2_detect(c("ba", "b", "a", "baa"), "ba{1,}")')
+
+- Class: cmd_question
+  Output: Type `re2_match(c("ba", "b", "a", "baa"), "ba{1,}")`
+  CorrectAnswer: re2_match(c("ba", "b", "a", "baa"), "ba{1,}")
+  AnswerTests: omnitest(correctExpr = 're2_match(c("ba", "b", "a", "baa"), "ba{1,}")')
+
+- Class: text
+  Output: '`{n}` exactly n times'
+
+- Class: cmd_question
+  Output: Type `re2_detect(c("ba", "b", "a", "baa"), "ba{2}")`
+  CorrectAnswer: re2_detect(c("ba", "b", "a", "baa"), "ba{2}")
+  AnswerTests: omnitest(correctExpr = 're2_detect(c("ba", "b", "a", "baa"), "ba{2}")')
+
+- Class: text
+  Output: Syntax 4. Repetition
+
+- Class: text
+  Output: 'Syntax 4.3 Non-greedy with `?`'
+
+- Class: text
+  Output: '`x*?` zero or more x, prefer fewer'
+
+- Class: cmd_question
+  Output: Type `re2_detect(c("ba", "b", "a", "baa"), "ba*?")`
+  CorrectAnswer: re2_detect(c("ba", "b", "a", "baa"), "ba*?")
+  AnswerTests: omnitest(correctExpr = 're2_detect(c("ba", "b", "a", "baa"), "ba*?")')
+
+- Class: cmd_question
+  Output: Type `re2_match(c("ba", "b", "a", "baa"), "ba*?")`
+  CorrectAnswer: re2_match(c("ba", "b", "a", "baa"), "ba*?")
+  AnswerTests: omnitest(correctExpr = 're2_match(c("ba", "b", "a", "baa"), "ba*?")')
+
+- Class: text
+  Output: '`x+?` one or more x, prefer fewer'
+
+- Class: cmd_question
+  Output: Type `re2_detect(c("ba", "b", "a", "baa"), "ba+?")`
+  CorrectAnswer: re2_detect(c("ba", "b", "a", "baa"), "ba+?")
+  AnswerTests: omnitest(correctExpr = 're2_detect(c("ba", "b", "a", "baa"), "ba+?")')
+
+- Class: cmd_question
+  Output: Type `re2_match(c("ba", "b", "a", "baa"), "ba+?")`
+  CorrectAnswer: re2_match(c("ba", "b", "a", "baa"), "ba+?")
+  AnswerTests: omnitest(correctExpr = 're2_match(c("ba", "b", "a", "baa"), "ba+?")')
+
+- Class: text
+  Output: '`x??` zero or one x, prefer zero'
+
+
+- Class: cmd_question
+  Output: Type `re2_detect(c("ba", "b", "a", "baa"), "ba??")`
+  CorrectAnswer: re2_detect(c("ba", "b", "a", "baa"), "ba??")
+  AnswerTests: omnitest(correctExpr = 're2_detect(c("ba", "b", "a", "baa"), "ba??")')
+
+- Class: cmd_question
+  Output: Type `re2_match(c("ba", "b", "a", "baa"), "ba??")`
+  CorrectAnswer: re2_match(c("ba", "b", "a", "baa"), "ba??")
+  AnswerTests: omnitest(correctExpr = 're2_match(c("ba", "b", "a", "baa"), "ba??")')
+
+
+- Class: text
+  Output: '`x{n,m}?` n to m times, prefer fewer'
+
+- Class: cmd_question
+  Output: Type `re2_detect(c("ba", "b", "a", "baa"), "ba{0,2}?")`
+  CorrectAnswer: re2_detect(c("ba", "b", "a", "baa"), "ba{0,2}?")
+  AnswerTests: omnitest(correctExpr = 're2_detect(c("ba", "b", "a", "baa"), "ba{0,2}?")')
+
+- Class: cmd_question
+  Output: Type `re2_match(c("ba", "b", "a", "baa"), "ba{0,2}?")`
+  CorrectAnswer: re2_match(c("ba", "b", "a", "baa"), "ba{0,2}?")
+  AnswerTests: omnitest(correctExpr = 're2_match(c("ba", "b", "a", "baa"), "ba{0,2}?")')
+
+- Class: text
+  Output: '`x{n,}?` n or more times, prefer fewer'
+
+- Class: cmd_question
+  Output: Type `re2_match(c("ba", "b", "a", "baa"), "ba{1,}?")`
+  CorrectAnswer: re2_match(c("ba", "b", "a", "baa"), "ba{1,}?")
+  AnswerTests: omnitest(correctExpr = 're2_match(c("ba", "b", "a", "baa"), "ba{1,}?")')
+
+- Class: text
+  Output: '`x{n}?` exactly n time'
+
+- Class: cmd_question
+  Output: Type `re2_match(c("ba", "b", "a", "baa"), "ba{2}?")`
+  CorrectAnswer: re2_match(c("ba", "b", "a", "baa"), "ba{2}?")
+  AnswerTests: omnitest(correctExpr = 're2_match(c("ba", "b", "a", "baa"), "ba{2}?")')
+
+- Class: text
+  Output: WoW, That is all of part 4!
+
+- Class: text
+  Output: Syntax 5. Group
+
+- Class: text
+  Output: 'Syntax 5.1 Unnamed Group `()`'
+
+- Class: text
+  Output: 'With groups `()`, we can capture a unit of a substring in a pattern.'
+
+- Class: cmd_question
+  Output: Type `re2_match(c("XOXO"), "(XO){2}")`
+  CorrectAnswer: re2_match(c("XOXO"), "(XO){2}")
+  AnswerTests: omnitest(correctExpr = 're2_match(c("XOXO"), "(XO){2}")')
+
+- Class: text
+  Output: '`.1` is the first captured group.'
+
+
+- Class: cmd_question
+  Output: Type `re2_match(c("XOXOO"), "(XO+){2}")`
+  CorrectAnswer: re2_match(c("XOXOO"), "(XO+){2}")
+  AnswerTests: omnitest(correctExpr = 're2_match(c("XOXOO"), "(XO+){2}")')
+
+- Class: text
+  Output: '`(XO+){2}` iterates on `(XO+)` for two times, and `.1` only returns the last iteration of the result. The first time is "XO", the last times is "XOO".'
+
+- Class: text
+  Output: 'To get the total result of the `(XO+){2}`, we can wrap another group around it.'
+
+- Class: cmd_question
+  Output: Type `re2_match("XOXOO", "((XO+){2})")`
+  CorrectAnswer: re2_match("XOXOO", "((XO+){2})")
+  AnswerTests: omnitest(correctExpr = 're2_match("XOXOO", "((XO+){2})")')
+
+- Class: text
+  Output: 'Syntax 5.2 Named Group `(?P<name>)`'
+
+- Class: text
+  Output: Each captured group can have a name. The name can contains ASCII letters and digits.
+
+- Class: cmd_question
+  Output: Type `re2_match("XOXOO", "((?P<name>XO+){2})")`
+  CorrectAnswer: re2_match("XOXOO", "((?P<name>XO+){2})")
+  AnswerTests: omnitest(correctExpr = 're2_match("XOXOO", "((?P<name>XO+){2})")')
+
+- Class: cmd_question
+  Output: Type `re2_match("test@mail.com", "(?P<username>[a-zA-Z0-9._%-]+)@(?P<host>[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4})")`
+  CorrectAnswer: re2_match("test@mail.com", "(?P<username>[a-zA-Z0-9._%-]+)@(?P<host>[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4})")
+  AnswerTests: omnitest(correctExpr = 're2_match("test@mail.com", "(?P<username>[a-zA-Z0-9._%-]+)@(?P<host>[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4})")')
+
+- Class: text
+  Output: Syntax 5.3 Uncaptured Group `(?:)`
+
+- Class: text
+  Output: The uncaptured group does not capture and return the result, but will group the into a unit.
+
+- Class: cmd_question
+  Output: Type `re2_match("The number is 12345.", ".*(?:\\d{5}).*")`
+  CorrectAnswer: re2_match("The number is 12345.", ".*(?:\\d{5}).*")
+  AnswerTests: omnitest(correctExpr = 're2_match("The number is 12345.", ".*(?:\\d{5}).*")')
+
+- Class: cmd_question
+  Output: Type `re2_match("The number is 12345.", ".*(\\d{5}).*")`
+  CorrectAnswer: re2_match("The number is 12345.", ".*(\\d{5}).*")
+  AnswerTests: omnitest(correctExpr = 're2_match("The number is 12345.", ".*(\\d{5}).*")')
+
+- Class: text
+  Output: Syntax 5.4 Flags with Group `(?ims-U:)`
+
+- Class: text
+  Output: '`i` case-insensitive'
+
+- Class: cmd_question
+  Output: Type `re2_detect("HAPPY", "(?i:happy)")`
+  CorrectAnswer: re2_detect("HAPPY", "(?i:happy)")
+  AnswerTests: omnitest(correctExpr = 're2_detect("HAPPY", "(?i:happy)")')
+
+- Class: cmd_question
+  Output: Type `re2_detect("HAPPY", "happy")`
+  CorrectAnswer: re2_detect("HAPPY", "happy")
+  AnswerTests: omnitest(correctExpr = 're2_detect("HAPPY", "happy")')
+
+- Class: text
+  Output: '`m` multi-line mode: `^` and dollar symbol match begin/end line in addition to begin/end text'
+
+- Class: cmd_question
+  Output: Type `cat("abc\ndef")`
+  CorrectAnswer: cat("abc\ndef")
+  AnswerTests: omnitest(correctExpr = 'cat("abc\ndef")')
+
+- Class: cmd_question
+  Output: Type `re2_match("abc\ndef", "(?m:^def$)")`
+  CorrectAnswer: re2_match("abc\ndef", "(?m:^def$)")
+  AnswerTests: omnitest(correctExpr = 're2_match("abc\ndef", "(?m:^def$)")')
+
+- Class: cmd_question
+  Output: Type `re2_match("abc\ndef", "^def$")`
+  CorrectAnswer: re2_match("abc\ndef", "^def$")
+  AnswerTests: omnitest(correctExpr = 're2_match("abc\ndef", "^def$")')
+
+- Class: text
+  Output: '`s` let `.` match `\n`'
+
+- Class: cmd_question
+  Output: Type `re2_match("abc\n", "(?s:.*)")`
+  CorrectAnswer: re2_match("abc\n", "(?s:.*)")
+  AnswerTests: omnitest(correctExpr = 're2_match("abc\n", "(?s:.*)")')
+
+- Class: cmd_question
+  Output: Type `re2_match("abc\n", ".*")`
+  CorrectAnswer: re2_match("abc\n", ".*")
+  AnswerTests: omnitest(correctExpr = 're2_match("abc\n", ".*")')
+
+- Class: text
+  Output: '`U` ungreedy: swap meaning of `x` and `x?`, `x+` and `x+?`'
+
+- Class: cmd_question
+  Output: Type `re2_match("aaaa", "(?U:.+?)")`
+  CorrectAnswer: re2_match("aaaa", "(?U:.+?)")
+  AnswerTests: omnitest(correctExpr = 're2_match("aaaa", "(?U:.+?)")')
+
+- Class: cmd_question
+  Output: Type `re2_match("aaaa", ".+?")`
+  CorrectAnswer: re2_match("aaaa", ".+?")
+  AnswerTests: omnitest(correctExpr = 're2_match("aaaa", ".+?")')
+
+- Class: text
+  Output: '`-` clear one flag'
+
+- Class: cmd_question
+  Output: Type `re2_detect("HAPPY", "(?iU:(?-i:happy))")`
+  CorrectAnswer: re2_detect("HAPPY", "(?iU:(?-i:happy))")
+  AnswerTests: omnitest(correctExpr = 're2_detect("HAPPY", "(?iU:(?-i:happy))")')
+
+- Class: cmd_question
+  Output: Type `re2_detect("HAPPY", "(?iU:happy)")`
+  CorrectAnswer: re2_detect("HAPPY", "(?iU:happy)")
+  AnswerTests: omnitest(correctExpr = 're2_detect("HAPPY", "(?iU:happy)")')
+
+- Class: text
+  Output: Congratulation! We are now at the last part!
+
+- Class: text
+  Output: Syntax 6. Empty Strings
+
+- Class: text
+  Output: These characters in the pattern will match empty string, or we can say it match a position in a string.
+
+- Class: text
+  Output: 'Syntax 6.1 Anchor `^ $ \z \A`'
+
+- Class: text
+  Output: '`^` matches the beginning of a line.'
+
+- Class: cmd_question
+  Output: Type `re2_match(c("apple","banana"), "^a")`
+  CorrectAnswer: re2_match(c("apple","banana"), "^a")
+  AnswerTests: omnitest(correctExpr = 're2_match(c("apple","banana"), "^a")')
+
+- Class: text
+  Output: '`^a` - `^` assert position at the start of the string, `a` matches the character "a" literally.'
+
+- Class: text
+  Output: For "banana", "a" is not in the position at start of the string. So it does not match `^a`.
+
+- Class: text
+  Output: '`$` matches the end of a line.'
+
+- Class: cmd_question
+  Output: Type `re2_match(c("apple","banana"), "a$")`
+  CorrectAnswer: re2_match(c("apple","banana"), "a$")
+  AnswerTests: omnitest(correctExpr = 're2_match(c("apple","banana"), "a$")')
+
+- Class: text
+  Output: 'Use `\A` and `\z` to match the start and end of the string, `^` and `$` match the start/end of a line. The main difference is in the multiline mode with `(?m:)` flag.'
+
+- Class: cmd_question
+  Output: Type `re2_match("abc\ndef\ng", re2("(?m:^g$)"))`
+  CorrectAnswer: re2_match("abc\ndef\ng", re2("(?m:^g$)"))
+  AnswerTests: omnitest(correctExpr = 're2_match("abc\ndef\ng", re2("(?m:^g$)"))')
+
+- Class: cmd_question
+  Output: Type `re2_match("abc\ndef\ng", re2("(?m:\\Ag\\z)"))`
+  CorrectAnswer: re2_match("abc\ndef\ng", re2("(?m:\\Ag\\z)"))
+  AnswerTests: omnitest(correctExpr = 're2_match("abc\ndef\ng", re2("(?m:\\Ag\\z)"))')
+
+- Class: text
+  Output: Syntax 6.2 Boundary `\b \B`
+
+- Class: text
+  Output: '`\b` at ASCII word boundary'
+
+- Class: cmd_question
+  Output: Type `re2_match("to be or not to be", "\\bto\\b")`
+  CorrectAnswer: re2_match("to be or not to be", "\\bto\\b")
+  AnswerTests: omnitest(correctExpr = 're2_match("to be or not to be", "\\bto\\b")')
+
+- Class: text
+  Output: '`\B` not at ASCII word boundary'
+
+- Class: cmd_question
+  Output: Type `re2_locate("to be or not to be", "\\Bo\\B")`
+  CorrectAnswer: re2_locate("to be or not to be", "\\Bo\\B")
+  AnswerTests: omnitest(correctExpr = 're2_locate("to be or not to be", "\\Bo\\B")')
+
+- Class: text
+  Output: '`re2_locate` returns the start and end position of the matched substring.'
+
+- Class: text
+  Output: The "o" in "not" matches the pattern `\Bo\B`.
+
+- Class: text
+  Output: |
+        1. Normal Letters and Digits, 2. Composition,
+        3. Match Single Character,  4. Repetition,
+        5. Group, 6.Empty Strings.
+
+- Class: text
+  Output: That is all of this lesson. In the next lesson, we will learn about how to use these syntax with regex methods.

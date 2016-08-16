@@ -1,0 +1,200 @@
+- Class: meta
+  Course: Learn Regular Expression with re2r
+  Lesson: Learn Option
+  Author: Qin Wenfeng
+  Type: Standard
+  Organization: re2r
+  Version: 2.4.2
+
+- Class: text
+  Output: Welcome back!
+
+- Class: text
+  Output: There are many options for a regex. These options will change the meanings of metacharacters or the matching process.
+
+- Class: text
+  Output: In this lesson we will learn 9 options.
+
+- Class: text
+  Output: 1. Literal
+
+- Class: text
+  Output: `re2(literal = FALSE)` Interpret pattern string as literal, not regexp.
+
+- Class: cmd_question
+  Output: Type `re2_detect("[|$^*", re2("[|$^*", literal = T))`
+  CorrectAnswer: re2_detect("[|$^*", re2("[|$^*", literal = T))
+  AnswerTests: omnitest(correctExpr = 're2_detect("[|$^*", re2("[|$^*", literal = T))')
+
+- Class: text
+  Output: 2. Case Sensitive
+
+- Class: text
+  Output: `re2(case_sensitive = TRUE)` is case-sensitive by default, regex can override with (?i) unless in posix_syntax mode.
+
+- Class: cmd_question
+  Output: Type `re2_detect("HAPPY", re2("happy", case_sensitive = FALSE))`
+  CorrectAnswer: re2_detect("HAPPY", re2("happy", case_sensitive = FALSE))
+  AnswerTests: omnitest(correctExpr = 're2_detect("HAPPY", re2("happy", case_sensitive = FALSE))')
+
+- Class: text
+  Output: 3. Posix Syntax
+
+- Class: text
+  Output: `re2(posix_syntax = FALSE)` restricts regexps to POSIX egrep syntax.
+
+- Class: text
+  Output:  Error - re2("(?P<name>re)", posix_syntax = TRUE)
+
+- Class: text
+  Output: There are three more options `perl_classes`  `word_boundary` and `one_line`, when `posix_syntax` is not  restricted, these features are always enabled
+
+- Class: text
+  Output: 3.1 One Line
+
+- Class: text
+  Output: `re2(one_line = FALSE)` `^` and `$` only match beginning and end of text.
+
+- Class: cmd_question
+  Output: Type `re2_detect("abc\ndef", re2("^abc$", posix_syntax = T, one_line = T))`
+  CorrectAnswer: re2_detect("abc\ndef", re2("^abc$", posix_syntax = T, one_line = T))
+  AnswerTests: omnitest(correctExpr = 're2_detect("abc\ndef", re2("^abc$", posix_syntax = T, one_line = T))')
+
+- Class: cmd_question
+  Output: Type `re2_detect("abc\ndef", re2("^abc$", posix_syntax = T))`
+  CorrectAnswer: re2_detect("abc\ndef", re2("^abc$", posix_syntax = T))
+  AnswerTests: omnitest(correctExpr = 're2_detect("abc\ndef", re2("^abc$", posix_syntax = T))')
+
+- Class: text
+  Output: 3.2 Perl Classes
+
+- Class: text
+  Output: `re2(perl_classes = FALSE)` Perl's `\d \s \w \D \S \W` meta classes.
+
+- Class: cmd_question
+  Output: Type `re2_detect("abc", re2("\\w", posix_syntax = T, perl_classes = T))`
+  CorrectAnswer: re2_detect("abc", re2("\\w", posix_syntax = T, perl_classes = T))
+  AnswerTests: omnitest(correctExpr = 're2_detect("abc", re2("\\w", posix_syntax = T, perl_classes = T))')
+
+- Class: text
+  Output: Error - re2_detect("abc", re2("\\w", posix_syntax = T))
+
+- Class: text
+  Output: 3.3 Word Boundary
+
+- Class: text
+  Output: `re2(word_boundary = FALSE)` Perl's `\b \B`
+
+- Class: cmd_question
+  Output: Type `re2_detect("abc", re2("\\b", posix_syntax = T, word_boundary = T))`
+  CorrectAnswer: re2_detect("abc", re2("\\b", posix_syntax = T, word_boundary = T))
+  AnswerTests: omnitest(correctExpr = 're2_detect("abc", re2("\\b", posix_syntax = T, word_boundary = T))')
+
+- Class: text
+  Output: 4. `.` Matches Newline
+
+- Class: text
+  Output: `re2(dot_nl = FALSE)` `.` matches everything including newline
+
+- Class: text
+  Output: 5. Longest Match
+
+- Class: text
+  Output: `re2(longest_match = FALSE)`  Search for longest match, not first match.
+
+- Class: cmd_question
+  Output: Type `re2_match("aaabaaaa",re2("(a|aaa)",longest_match = TRUE))`
+  CorrectAnswer: re2_match("aaabaaaa",re2("(a|aaa)",longest_match = TRUE))
+  AnswerTests: omnitest(correctExpr = 're2_match("aaabaaaa",re2("(a|aaa)",longest_match = TRUE))')
+
+- Class: cmd_question
+  Output: Type `re2_match("aaabaaaa",re2("(a|aaa)"))`
+  CorrectAnswer: re2_match("aaabaaaa",re2("(a|aaa)"))
+  AnswerTests: omnitest(correctExpr = 're2_match("aaabaaaa",re2("(a|aaa)"))')
+
+- Class: text
+  Output: 6. Never Match `\n`
+
+- Class: text
+  Output: `re2(never_nl = FALSE)` Never match `\n`.
+
+- Class: cmd_question
+  Output: Type `re2_match("abc\ndef", re2("(?s)(.*)", never_nl = FALSE))`
+  CorrectAnswer: re2_match("abc\ndef", re2("(?s)(.*)", never_nl = FALSE))
+  AnswerTests: omnitest(correctExpr = 're2_match("abc\ndef", re2("(?s)(.*)", never_nl = FALSE))')
+
+- Class: cmd_question
+  Output: Type `re2_match("abc\ndef", re2("(?s)(.*)"))`
+  CorrectAnswer: re2_match("abc\ndef", re2("(?s)(.*)"))
+  AnswerTests: omnitest(correctExpr = 're2_match("abc\ndef", re2("(?s)(.*)"))')
+
+- Class: text
+  Output: 7. Never Capture
+
+- Class: text
+  Output: `re2(never_capture = FALSE)` Never capture.
+
+- Class: cmd_question
+  Output: Type `re2_match("<html>", re2("<(\\w+)>",never_capture = TRUE))`
+  CorrectAnswer: re2_match("<html>", re2("<(\\w+)>",never_capture = TRUE))
+  AnswerTests: omnitest(correctExpr = 're2_match("<html>", re2("<(\\w+)>",never_capture = TRUE))')
+
+- Class: cmd_question
+  Output: Type `re2_match("<html>", re2("<(\\w+)>"))`
+  CorrectAnswer: re2_match("<html>", re2("<(\\w+)>"))
+  AnswerTests: omnitest(correctExpr = 're2_match("<html>", re2("<(\\w+)>"))')
+
+- Class: text
+  Output: 8. Max Memory
+
+- Class: text
+  Output: `re2(max_mem = 8388608)` The max_mem option controls how much memory can be used to hold the compiled form of the regexp (the Prog) and its cached DFA graphs.
+
+- Class: text
+  Output: Once a DFA fills its budget, it flushes its cache and starts over. If this happens too often, RE2 falls back on the NFA implementation.
+
+- Class: text
+  Output: For now, make the default budget something close to Code Search.
+
+- Class: text
+  Output: Default max_mem = 8<<20 = 8388608
+
+- Class: text
+  Output: 9. Anchors
+
+- Class: text
+  Output: Anchors are available in `match`, `detect`, `extract`, and `count`  methods.
+
+- Class: text
+  Output: `UNANCHORED` - No anchoring, the default value
+
+- Class: cmd_question
+  Output: Type `re2_match_all("ABABAB", "AB", anchor = UNANCHORED)`
+  CorrectAnswer: re2_match_all("ABABAB", "AB", anchor = UNANCHORED)
+  AnswerTests: omnitest(correctExpr = 're2_match_all("ABABAB", "AB", anchor = UNANCHORED)')
+
+- Class: text
+  Output: `ANCHOR_START` - Anchor at start of the match position
+
+- Class: cmd_question
+  Output: Type `re2_match_all("ABABAB", "AB", anchor = ANCHOR_START)`
+  CorrectAnswer: re2_match_all("ABABAB", "AB", anchor = ANCHOR_START)
+  AnswerTests: omnitest(correctExpr = 're2_match_all("ABABAB", "AB", anchor = ANCHOR_START)')
+
+- Class: cmd_question
+  Output: Type `re2_match_all("ABABAB", "^AB")`
+  CorrectAnswer: re2_match_all("ABABAB", "^AB")
+  AnswerTests: omnitest(correctExpr = 're2_match_all("ABABAB", "^AB")')
+
+- Class: text
+  Output: `ANCHOR_BOTH` - Anchor at start and end of the match position
+
+- Class: cmd_question
+  Output: Type `re2_match_all("ABABAB", "AB", anchor = ANCHOR_BOTH)`
+  CorrectAnswer: re2_match_all("ABABAB", "AB", anchor = ANCHOR_BOTH)
+  AnswerTests: omnitest(correctExpr = 're2_match_all("ABABAB", "AB", anchor = ANCHOR_BOTH)')
+
+- Class: cmd_question
+  Output: Type `re2_match_all("ABABAB", "ABABAB", anchor = ANCHOR_BOTH)`
+  CorrectAnswer: re2_match_all("ABABAB", "ABABAB", anchor = ANCHOR_BOTH)
+  AnswerTests: omnitest(correctExpr = 're2_match_all("ABABAB", "ABABAB", anchor = ANCHOR_BOTH)')
