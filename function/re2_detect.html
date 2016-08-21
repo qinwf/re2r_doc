@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<title>re2_detect. re2r 0.1.0</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="">
+
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/bootstrap-responsive.css" rel="stylesheet">
+<link href="css/highlight.css" rel="stylesheet">
+<link href="css/staticdocs.css" rel="stylesheet">
+
+<!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-58841928-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+<meta name="twitter:site" content="https://qinwenfeng.com/re2r_doc">
+<meta name="twitter:title" content="re2r Doc">
+<meta name="twitter:description" content="A Guide for re2r Package.">
+<meta name="twitter:image" content="https://www.r-project.org/logo/Rlogo.png">
+
+<meta property="og:url" content="https://qinwenfeng.com/re2r_doc">
+<meta property="og:title" content="re2r Doc">
+<meta property="og:description" content="A Guide for re2r Package.">
+<meta property="og:site_name" content="re2r Doc">
+<meta property="og:image" content="https://www.r-project.org/logo/Rlogo.png">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="en_US">
+
+<meta property="fb:admins" content="100001323841762" />
+  </head>
+
+  <body>
+    <div class="navbar">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="brand" href="#">re2r 0.1.0</a>
+      <div class="nav">
+        <ul class="nav">
+          <li><a href="index.html"><i class="icon-home icon-white"></i> Index</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <div class="container">
+      <header>
+        
+      </header>
+      
+      <h1>Test a pattern in strings, and return boolean.</h1>
+
+<div class="row">
+  <div class="span8">
+    <h2>Usage</h2>
+    <pre><div>re2_detect(string, pattern, anchor&nbsp;=&nbsp;UNANCHORED, parallel&nbsp;=&nbsp;FALSE, grain_size&nbsp;=&nbsp;1e+05, ...)</div></pre>
+    
+    <h2>Arguments</h2>
+    <dl>
+      <dt>string</dt>
+      <dd>a character vector</dd>
+      <dt>pattern</dt>
+      <dd>a character vector or pre-compiled regular expressions</dd>
+      <dt>anchor</dt>
+      <dd>see <code><a href='UNANCHORED.html'>UNANCHORED</a></code></dd>
+      <dt>parallel</dt>
+      <dd>use multithread</dd>
+      <dt>grain_size</dt>
+      <dd>a minimum chunk size for tuning the behavior of parallel algorithms</dd>
+      <dt>...</dt>
+      <dd>further arguments passed to <code><a href='re2.html'>re2</a></code></dd>
+    </dl>
+    
+    <div class="Value">
+      <h2>Value</h2>
+
+      <p><dl>
+A logical vector.
+</dl></p>
+  
+    </div>
+
+    <div class="Description">
+      <h2>Description</h2>
+
+      <p>Test a pattern in strings, and return boolean. Vectorised over strings and patterns.</p>
+  
+    </div>
+    
+    <h2 id="examples">Examples</h2>
+    <pre class="examples"><div class='input'>re2_detect(&quot;one&quot;, &quot;(o.e)&quot;)
+</div>
+<div class='output'>[1] TRUE
+</div>
+<div class='input'>re2_detect(&quot;123-234-2222&quot;, &quot;\\d\\d\\d-\\d\\d\\d-\\d\\d\\d\\d&quot;)
+</div>
+<div class='output'>[1] TRUE
+</div>
+<div class='input'>
+words = c(&quot;sunny&quot;,&quot;beach&quot;,&quot;happy&quot;,&quot;really&quot;)
+re2_detect(words, &quot;y&quot;)
+</div>
+<div class='output'>[1]  TRUE FALSE  TRUE  TRUE
+</div>
+<div class='input'>re2_detect(words, &quot;^b&quot;)
+</div>
+<div class='output'>[1] FALSE  TRUE FALSE FALSE
+</div>
+<div class='input'>re2_detect(words, &quot;[abc]&quot;)
+</div>
+<div class='output'>[1] FALSE  TRUE  TRUE  TRUE
+</div>
+<div class='input'>
+# vectorize
+(res = re2_detect(&quot;This&quot;, letters))
+</div>
+<div class='output'> [1] FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE FALSE FALSE FALSE
+[13] FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE
+[25] FALSE FALSE
+</div>
+<div class='input'>letters[res]
+</div>
+<div class='output'>[1] &quot;h&quot; &quot;i&quot; &quot;s&quot;
+</div>
+<div class='input'>
+letters[re2_detect(&quot;This&quot;, letters, case_sensitive = FALSE)]
+</div>
+<div class='output'>[1] &quot;h&quot; &quot;i&quot; &quot;s&quot; &quot;t&quot;
+</div>
+<div class='input'>
+letters[re2_detect(&quot;This&quot;, re2(letters, case_sensitive = FALSE))]
+</div>
+<div class='output'>[1] &quot;h&quot; &quot;i&quot; &quot;s&quot; &quot;t&quot;
+</div>
+<div class='input'>
+# In stringi, &quot;&quot; empty search patterns return NA.
+# In re2r, empty search patterns will match
+# empty string.
+
+re2_detect(&quot;abc&quot;, &quot;&quot;)
+</div>
+<div class='output'>[1] TRUE
+</div>
+<div class='input'>stringi::stri_detect(&quot;abc&quot;, regex = &quot;&quot;)
+</div>
+<strong class='warning'>Warning message:
+empty search patterns are not supported</strong>
+<div class='output'>[1] NA
+</div>
+<div class='input'></div></pre>
+  </div>
+  <div class="span4">
+    <!-- <ul>
+      <li>re2_detect</li>
+    </ul>
+    <ul>
+      
+    </ul> -->
+      
+        
+  </div>
+</div>
+      
+      <footer>
+      <p class="pull-right"><a href="#">Back to top</a></p>
+<p>Built by <a href="https://github.com/hadley/staticdocs">staticdocs</a>. Styled with <a href="https://getbootstrap.com/2.0.4/">bootstrap</a>.</p>
+      </footer>
+    </div>
+  </body>
+</html>

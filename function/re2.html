@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<title>re2. re2r 0.1.0</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="">
+
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/bootstrap-responsive.css" rel="stylesheet">
+<link href="css/highlight.css" rel="stylesheet">
+<link href="css/staticdocs.css" rel="stylesheet">
+
+<!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-58841928-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+<meta name="twitter:site" content="https://qinwenfeng.com/re2r_doc">
+<meta name="twitter:title" content="re2r Doc">
+<meta name="twitter:description" content="A Guide for re2r Package.">
+<meta name="twitter:image" content="https://www.r-project.org/logo/Rlogo.png">
+
+<meta property="og:url" content="https://qinwenfeng.com/re2r_doc">
+<meta property="og:title" content="re2r Doc">
+<meta property="og:description" content="A Guide for re2r Package.">
+<meta property="og:site_name" content="re2r Doc">
+<meta property="og:image" content="https://www.r-project.org/logo/Rlogo.png">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="en_US">
+
+<meta property="fb:admins" content="100001323841762" />
+  </head>
+
+  <body>
+    <div class="navbar">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="brand" href="#">re2r 0.1.0</a>
+      <div class="nav">
+        <ul class="nav">
+          <li><a href="index.html"><i class="icon-home icon-white"></i> Index</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <div class="container">
+      <header>
+        
+      </header>
+      
+      <h1>Create a pre-compiled regular expression</h1>
+
+<div class="row">
+  <div class="span8">
+    <h2>Usage</h2>
+    <pre><div>re2(pattern, utf_8&nbsp;=&nbsp;TRUE, case_sensitive&nbsp;=&nbsp;TRUE, posix_syntax&nbsp;=&nbsp;FALSE, dot_nl&nbsp;=&nbsp;FALSE, literal&nbsp;=&nbsp;FALSE, longest_match&nbsp;=&nbsp;FALSE, never_nl&nbsp;=&nbsp;FALSE, never_capture&nbsp;=&nbsp;FALSE, one_line&nbsp;=&nbsp;FALSE, perl_classes&nbsp;=&nbsp;FALSE, word_boundary&nbsp;=&nbsp;FALSE, log_error&nbsp;=&nbsp;FALSE, max_mem&nbsp;=&nbsp;8388608, simplify&nbsp;=&nbsp;TRUE)</div></pre>
+    
+    <h2>Arguments</h2>
+    <dl>
+      <dt>pattern</dt>
+      <dd>regular expression pattern</dd>
+      <dt>utf_8</dt>
+      <dd>(true)  text and pattern are UTF-8; otherwise Latin-1</dd>
+      <dt>case_sensitive</dt>
+      <dd>(true)  match is case-sensitive (regexp can override with (?i) unless in posix_syntax mode)</dd>
+      <dt>posix_syntax</dt>
+      <dd>(false) restrict regexps to POSIX egrep syntax</dd>
+      <dt>dot_nl</dt>
+      <dd>(false) dot matches everything including new line</dd>
+      <dt>literal</dt>
+      <dd>(false) interpret string as literal, not regexp</dd>
+      <dt>longest_match</dt>
+      <dd>(false) search for longest match, not first match</dd>
+      <dt>never_nl</dt>
+      <dd>(false) never match \n, even if it is in regexp</dd>
+      <dt>never_capture</dt>
+      <dd>(false) parse all parens as non-capturing</dd>
+      <dt>one_line</dt>
+      <dd>(false) ^ and $ only match beginning and end of text, when posix_syntax == false this features are always enabled</dd>
+      <dt>perl_classes</dt>
+      <dd>(false) allow Perl's \d \s \w \D \S \W, when posix_syntax == false this features are always enabled</dd>
+      <dt>word_boundary</dt>
+      <dd>(false) allow Perl's \b \B (word boundary and not), when posix_syntax == false this features are always enabled</dd>
+      <dt>log_error</dt>
+      <dd>(false) log syntax and execution errors</dd>
+      <dt>max_mem</dt>
+      <dd>(see details)  approx. max memory footprint of RE2</dd>
+      <dt>simplify</dt>
+      <dd>(true) return a object instead of a list when pattern length is 1.</dd>
+    </dl>
+    
+    <div class="Value">
+      <h2>Value</h2>
+
+      <p><dl>
+a pre-compiled regular expression
+</dl></p>
+  
+    </div>
+
+    <div class="Description">
+      <h2>Description</h2>
+
+      <p>Create a pre-compiled regular expression from a string.</p>
+  
+    </div>
+
+    <div class="Details">
+      <h2>Details</h2>
+
+      <p>The max_mem option controls how much memory can be used
+to hold the compiled form of the regexp (the Prog) and
+its cached DFA graphs.</p>
+  
+      <p>Once a DFA fills its budget, it flushes its cache and starts over.
+If this happens too often, RE2 falls back on the NFA implementation.</p>
+  
+      <p>For now, make the default budget something close to Code Search.</p>
+  
+      <p>Default maxmem = 8<<20 = 8388608;</p>
+  
+    </div>
+    
+    <h2 id="examples">Examples</h2>
+    <pre class="examples"><div class='input'>regexp = re2(&quot;test&quot;)
+regexp
+</div>
+<div class='output'>re2 pre-compiled regular expression
+
+pattern: test
+number of capturing subpatterns: 0
+capturing names with indices: 
+.match
+expression size: 8
+</div>
+<div class='input'>
+re2_match(&quot;abc\ndef&quot;,&quot;(?s)(.*)&quot;)
+</div>
+<div class='output'>     .match     .1        
+[1,] &quot;abc\ndef&quot; &quot;abc\ndef&quot;
+</div>
+<div class='input'>re2_match(&quot;abc\ndef&quot;, re2(&quot;(?s)(.*)&quot;, never_nl = TRUE))
+</div>
+<div class='output'>     .match .1   
+[1,] &quot;abc&quot;  &quot;abc&quot;
+</div>
+<div class='input'>
+re2_detect(&quot;\n&quot;, re2(&quot;.&quot;, dot_nl = TRUE))
+</div>
+<div class='output'>[1] TRUE
+</div>
+<div class='input'>re2_detect(&quot;\n&quot;, &quot;.&quot;)
+</div>
+<div class='output'>[1] FALSE
+</div>
+<div class='input'>
+get_number_of_groups(re2(&quot;(A)(v)&quot;,never_capture = TRUE))
+</div>
+<div class='output'>[1] 0
+</div>
+<div class='input'>
+re2_match(&quot;aaabaaaa&quot;,re2(&quot;(a|aaa)&quot;,longest_match = TRUE))
+</div>
+<div class='output'>     .match .1   
+[1,] &quot;aaa&quot;  &quot;aaa&quot;
+</div>
+<div class='input'>re2_match(&quot;aaabaaaa&quot;,re2(&quot;(a|aaa)&quot;,longest_match = FALSE))
+</div>
+<div class='output'>     .match .1 
+[1,] &quot;a&quot;    &quot;a&quot;
+</div>
+<div class='input'>
+re2_match(&quot;a+b&quot;, re2(&quot;a+b&quot;, literal = TRUE))
+</div>
+<div class='output'>     .match
+[1,] &quot;a+b&quot; 
+</div>
+<div class='input'>
+re2_detect(&quot;abc&quot; , re2(&quot;abc&quot;, posix_syntax = TRUE))
+</div>
+<div class='output'>[1] TRUE
+</div>
+<div class='input'>re2(&quot;(?P&lt;name&gt;re)&quot;)
+</div>
+<div class='output'>re2 pre-compiled regular expression
+
+pattern: (?P&lt;name&gt;re)
+number of capturing subpatterns: 1
+capturing names with indices: 
+.match name
+expression size: 8
+</div>
+<div class='input'>
+## Not run: 
+# 
+# expect_error(re2(&quot;(?P&lt;name&gt;re)&quot;, posix_syntax = TRUE))
+# ## End(Not run)
+
+</div></pre>
+  </div>
+  <div class="span4">
+    <!-- <ul>
+      <li>re2</li>
+    </ul>
+    <ul>
+      
+    </ul> -->
+      
+        
+  </div>
+</div>
+      
+      <footer>
+      <p class="pull-right"><a href="#">Back to top</a></p>
+<p>Built by <a href="https://github.com/hadley/staticdocs">staticdocs</a>. Styled with <a href="https://getbootstrap.com/2.0.4/">bootstrap</a>.</p>
+      </footer>
+    </div>
+  </body>
+</html>

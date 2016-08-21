@@ -1,0 +1,107 @@
+---
+date: "`r Sys.Date()`"
+title: re2r Benchmark
+output: html_document
+vignette: >
+  %\VignetteIndexEntry{benchmark on re2r}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r options, echo = FALSE, message = FALSE}
+knitr::opts_chunk$set(
+  comment = "#>",
+  error = FALSE,
+  tidy = FALSE
+)
+
+options(digits = 3, microbenchmark.unit = "ms")
+```
+
+```{r library, echo = FALSE, message = FALSE}
+library(re2r)
+library(stringi)
+library(microbenchmark)
+library(ggplot2)
+library(directlabels)
+library(knitr)
+
+parallel = T
+fail = T
+others = T
+redos = T
+stringi_bench = T
+
+linear.legend <- function(times, 
+                          ylab_name = "seconds", 
+                          xlab_name = "subject/pattern size",
+                          limit = c(1, 30), 
+                          breaks = c(1, 5, 10, 15, 20, 25),
+                          title = "Timing regular expressions in R, linear scale") 
+{
+  ggplot()+
+  ggtitle(title)+
+  scale_y_continuous(ylab_name)+
+  scale_x_continuous(xlab_name,
+                     limits=limit,
+                     breaks=breaks)+
+  geom_point(aes(N, time/1e9, color=expr),
+             shape=1,
+             data=times)
+}
+
+log.legend <- function(times, ylab_name = "log scale seconds",
+                       xlab_name = "subject/pattern size",
+                       limit = c(1, 30), 
+                       breaks = c(1, 5, 10, 15, 20, 25),
+                       title = "Timing regular expressions in R, log scale") 
+{ 
+  ggplot()+
+  ggtitle(title)+
+  scale_y_log10(ylab_name)+
+  scale_x_log10(xlab_name,
+                limits=limit,
+                breaks=breaks)+
+  geom_point(aes(N, time/1e9, color=expr),
+             shape=1,
+             data=times)
+}
+
+```
+
+
++ TRE - TRE in R base
++ PRCE - Perl Compatible Regular Expressions in R base
++ ICU - ICU with stringi
++ RE2n - RE2 with string pattern
++ RE2c - RE2 with pre-compiled regular expression
+
+
+
+```{r, include=FALSE}
+all_txt = c()
+
+if(redos==T){
+    all_txt = c(all_txt,knit_expand(file = "./bench/bench-redos.Rmd"))
+}
+
+if(fail==T){
+    all_txt = c(all_txt,knit_expand(file = "./bench/bench-fail.Rmd"))
+}
+
+if(stringi_bench==T){
+    all_txt = c(all_txt,knit_expand(file = "./bench/bench-stringi.Rmd"))
+}
+
+if(others==T){
+    all_txt = c(all_txt,knit_expand(file = "./bench/bench-others.Rmd"))
+}
+
+if(parallel==T){
+    all_txt = c(all_txt,knit_expand(file = "./bench/bench-parallel.Rmd"))
+}
+
+
+```
+
+`r knit(text = all_txt)`

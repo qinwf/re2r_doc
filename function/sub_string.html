@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<title>sub_string. re2r 0.1.0</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="">
+
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/bootstrap-responsive.css" rel="stylesheet">
+<link href="css/highlight.css" rel="stylesheet">
+<link href="css/staticdocs.css" rel="stylesheet">
+
+<!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-58841928-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+<meta name="twitter:site" content="https://qinwenfeng.com/re2r_doc">
+<meta name="twitter:title" content="re2r Doc">
+<meta name="twitter:description" content="A Guide for re2r Package.">
+<meta name="twitter:image" content="https://www.r-project.org/logo/Rlogo.png">
+
+<meta property="og:url" content="https://qinwenfeng.com/re2r_doc">
+<meta property="og:title" content="re2r Doc">
+<meta property="og:description" content="A Guide for re2r Package.">
+<meta property="og:site_name" content="re2r Doc">
+<meta property="og:image" content="https://www.r-project.org/logo/Rlogo.png">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="en_US">
+
+<meta property="fb:admins" content="100001323841762" />
+  </head>
+
+  <body>
+    <div class="navbar">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="brand" href="#">re2r 0.1.0</a>
+      <div class="nav">
+        <ul class="nav">
+          <li><a href="index.html"><i class="icon-home icon-white"></i> Index</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <div class="container">
+      <header>
+        
+      </header>
+      
+      <h1>Extract and replace substrings from a character vector.</h1>
+
+<div class="row">
+  <div class="span8">
+    <h2>Usage</h2>
+    <pre><div>sub_string(string, from&nbsp;=&nbsp;1L, to&nbsp;=&nbsp;-1L)</div>
+<div>sub_string(string, from&nbsp;=&nbsp;1L, to&nbsp;=&nbsp;-1L) <- value</div></pre>
+    
+    <h2>Arguments</h2>
+    <dl>
+      <dt>string</dt>
+      <dd>input character vector.</dd>
+      <dt>from</dt>
+      <dd>an integer vector or a two-column matrix.  <code>from</code> gives the position of the first character (defaults to first). Negative values count backwards from the last character.</dd>
+      <dt>to</dt>
+      <dd>an integer vector. <code>to</code> gives the position of the last (defaults to last character).</dd>
+      <dt>value</dt>
+      <dd>replacement string</dd>
+    </dl>
+    
+    <div class="Value">
+      <h2>Value</h2>
+
+      <p><dl>
+A character vector of substring from <code>start</code> to <code>end</code>
+  (inclusive). Will be length of longest input argument.
+</dl></p>
+  
+    </div>
+
+    <div class="Description">
+      <h2>Description</h2>
+
+      <p><code>sub_string</code> extracts substrings under code point-based index ranges provided. <code>sub_string<-</code> allows to substitute parts of a string with given strings.</p>
+  
+    </div>
+    
+    <h2 id="examples">Examples</h2>
+    <pre class="examples"><div class='input'>sub_string(&quot;test&quot;, 1, 2)
+</div>
+<div class='output'>[1] &quot;te&quot;
+</div>
+<div class='input'>
+x &lt;- &quot;ABC&quot;
+
+(sub_string(x, 1, 1) &lt;- &quot;A&quot;)
+</div>
+<div class='output'>[1] &quot;A&quot;
+</div>
+<div class='input'>x
+</div>
+<div class='output'>[1] &quot;ABC&quot;
+</div>
+<div class='input'>(sub_string(x, -2, -2) &lt;- &quot;GHIJ&quot;)
+</div>
+<div class='output'>[1] &quot;GHIJ&quot;
+</div>
+<div class='input'>x
+</div>
+<div class='output'>[1] &quot;AGHIJC&quot;
+</div>
+<div class='input'>(sub_string(x, 2, -2) &lt;- &quot;&quot;)
+</div>
+<div class='output'>[1] &quot;&quot;
+</div>
+<div class='input'>x
+</div>
+<div class='output'>[1] &quot;AC&quot;
+</div></pre>
+  </div>
+  <div class="span4">
+    <!-- <ul>
+      <li>sub_string</li><li>sub_string&lt;-</li>
+    </ul>
+    <ul>
+      
+    </ul> -->
+      
+    <h2>See also</h2>
+    
+The underlying implementation in <code><a href='http://www.inside-r.org/packages/cran/stringi/docs/stri_sub'>stri_sub</a></code>
+
+        
+  </div>
+</div>
+      
+      <footer>
+      <p class="pull-right"><a href="#">Back to top</a></p>
+<p>Built by <a href="https://github.com/hadley/staticdocs">staticdocs</a>. Styled with <a href="https://getbootstrap.com/2.0.4/">bootstrap</a>.</p>
+      </footer>
+    </div>
+  </body>
+</html>

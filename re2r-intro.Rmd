@@ -1,0 +1,194 @@
+---
+title: "Introduction to RE2"
+output: html_document
+vignette: >
+  %\VignetteIndexEntry{Introduction to RE2}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include=FALSE}
+options( markdown.HTML.template = system.file("misc", "docco-template.html", package = "knitr"))
+library(re2r)
+```
+
+## Table of Content
+
+1. What is Regular Expression
+2. When to use RE
+3. How to use RE with re2r
+4. RE packages in R
+5. Benchmark
+
+## What is Regular Expression
+
+It is a way to search for matches in strings. This is done by searching with "patterns" through the string.
+
+You probably know the `*` and `?` charachters used in the dir command on the command line. The `*` character means "zero or more arbitrary characters" and the `?` means "one arbitrary character". 
+
+When using a pattern like `text?.*`, it will find files like `textf.txt`, `text1.R`, and `text9.Rmd`.
+
+This is exactly the way RE works, and RE supplies much more patterns.
+
+## When to use RE
+
+Example usages could be:
+
+1. Remove all occurences of a specific tag from text file
+2. Check whether an e-mail address is well-formed
+
+Basically we can do the following operations on a string with REs:
+
+### 1. Test for a pattern
+
+Search through a string for a pattern, and return boolean result or matched substrings.
+
+### 2. Extract a substring
+
+Search for a substring, and return that substring.
+
+### 3. Replace a substring
+
+Search for a substring that matches a pattern, and replace it by another string.
+
+## How to use RE with re2r
+
+Here is a quick overview over the most common methods on how to execute a regular expression in **re2r**.
+
+### 1. Search a string
+
+```{r, eval=FALSE, include=TRUE}
+re2_detect(string, pattern)
+```
+
+Searches the string expression for a pattern and returns boolean result.
+
+```{r}
+re2_detect("this is just one test", "(o.e)")
+```
+
+`.` stands for **any character, possibly including newline** . For more syntax, you can check out the [RE2 Syntax](./re2r-syntax.html) vignette.
+
+Here is an example of email pattern.
+
+```r
+show_regex("\\b[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}\\b", width = 670, height = 280)
+```
+
+![show_regex](https://cdn.rawgit.com/qinwf/re2r/479fbaffa3ca800721abb42de29e388439b4fdd6/email.png)
+
+```{r}
+re2_detect("test@gmail.com", "\\b[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}\\b")
+```
+
+
+```{r, eval=FALSE, include=TRUE}
+re2_match(string, pattern)
+```
+
+This function will return the capture groups in `()`.
+
+```{r}
+(res = re2_match("this is just one test", "(o.e)"))
+str(res)
+```
+
+The return result is a character matrix. `.1` is the first capture group and it is unnamed group.
+
+We can create named capture group with `(?P<name>pattern)` syntax.
+
+```{r}
+(res = re2_match("this is just one test", "(?P<testname>this)( is)"))
+str(res)
+```
+
+If there is no capture group, the matched origin strings will be returned.
+
+```{r}
+test_string = c("this is just one test", "the second test");
+(res = re2_match(test_string, "is"))
+str(res)
+```
+
+`re2_match_all()` will return the all of patterns in a string instead of just the first one.
+
+```{r}
+re2_match_all(
+            string = c("this is test", 
+                      "this is test, and this is not test", 
+                      "they are tests"), 
+            pattern = "(?P<testname>this)( is)")
+```
+
+### 2. Replace a substring
+
+```{r, eval=FALSE, include=TRUE}
+re2_replace(string, pattern, rewrite)
+```
+
+Searches the string "input string" for the occurence(s) of a substring that matches 'pattern' and replaces the found substrings with "rewrite text".
+
+```{r}
+input_string = "this is just one test";
+new_string = "my"
+re2_replace(input_string, "(o.e)", new_string)
+```
+
+### 3. Extract a substring
+
+```{r, eval=FALSE, include=TRUE}
+re2_extract(input, pattern)
+```
+
+Searches the string "input string" for the occurence(s) of a substring that matches 'pattern' and return the found substrings with "rewrite text".
+
+```{r}
+re2_extract("yabba dabba doo", "yabba")
+re2_extract("test@me.com", "(.*)@([^.]*)")
+```
+
+### 4. Pre-compiled RE
+
+We can create a regular expression object (RE2 object) from a string. It will reduce the time to parse the syntax of the same pattern. 
+
+And this will also give us more option for the pattern. run `help(re2)` to get more detials.
+
+```{r}
+regexp = re2("test", case_sensitive = FALSE)
+print(regexp)
+```
+
+
+### 5. Multithread
+
+Use `parallel` option to enable multithread feature. It will improve performance for large inputs with a multi core CPU.
+
+```r
+re2_match(string, pattern, parallel = T)
+```
+
+## RE packages in R
+
+### 1. Base R with **PCRE**
+
+Base R functions such as `regexpr` use [PCRE](http://www.pcre.org/) when given the `perl = TRUE` argument. PCRE includes many useful features, such as [named capture](https://github.com/tdhock/regex-tutorial#motivation-for-using-named-capture-regular-expressions-5-minutes), but has an exponential time complexity.
+
+### 2. Base R with **TRE**
+
+Base R functions such as `regexpr` use [TRE](https://github.com/laurikari/tre) when given the `perl = FALSE` argument. TRE has a polynomial time complexity but does not include named capture groups.
+
+### 3. **stringi** with **ICU**
+
+`stringr::str_match` and `stringi::stri_match` use the regex engine from the ICU library, which has an exponential time complexity. The stringi package does not support named capture yet as such a feature set is still considered as [experimental in ICU](https://github.com/hadley/stringr/pull/16).
+
+### 4. **re2r** with **RE2**
+
+RE2 is a primarily DFA based regexp engine from Google that is very fast at matching large amounts of text. It is has a `polynomial time complexity` (or `fast and scalable` in general case), but it does not support `look behind` and some regular expression features.
+
+### Above all
+
+Although being slightly different to use (because of the design of the engines), all are quite similar to **Perl**'s implementation of REs. 
+
+## Benchmarks
+
+Benchmarks are disabled by default for CRAN. See https://qinwenfeng.com/re2r_doc for the results by Travis-CI.
